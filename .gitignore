@@ -1,0 +1,28 @@
+# Created by https://www.gitignore.io/api/linux,codeblocks
+
+### Linux ###
+*~
+
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+
+### CodeBlocks ###
+# specific to CodeBlocks IDE
+*.cbp
+*.layout
+*.depend
+
+# generated directories
+bin/
+obj/
+
+# App
+main.cpp
+assets
