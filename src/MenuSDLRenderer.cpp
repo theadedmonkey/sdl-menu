@@ -9,10 +9,12 @@
 
 #include <Menu.h>
 
-MenuSDLRenderer::MenuSDLRenderer(Menu* menu, SDL_Renderer* renderer)
+MenuSDLRenderer::MenuSDLRenderer(Menu* menu, SDL_Renderer* renderer, int x, int y)
 {
   this->menu = menu;
   this->renderer = renderer;
+  this-> x = x;
+  this-> y = y;
   this->loadFont();
   this->loadCursorImage();
 
@@ -34,6 +36,66 @@ MenuSDLRenderer::MenuSDLRenderer(Menu* menu, SDL_Renderer* renderer)
 MenuSDLRenderer::~MenuSDLRenderer()
 {
     //dtor
+}
+
+int MenuSDLRenderer::getW()
+{
+  /*
+   * menu width is equal to the width of the menu item
+   * with highest width.
+   */
+  int maximun = 0;
+  int labelRectW;
+  for (int i = 0; i < this->menu->getItemCount(); i++)
+  {
+    labelRectW = this->labelRects[i].w;
+    if (labelRectW > maximun)
+    {
+      maximun = labelRectW;
+    }
+  }
+  return maximun;
+}
+
+int MenuSDLRenderer::getH()
+{
+  /*
+   * menu height is equal to the sum of the heights
+   * of all the menu item heights.
+   */
+  int sum = 0;
+  for (int i = 0; i < this->menu->getItemCount(); i++)
+  {
+    sum += this->labelRects[i].h;
+  }
+  return sum;
+}
+
+void MenuSDLRenderer::setX(int x)
+{
+  this->x = x;
+  MenuSDLRenderer::updateLabelRect(x, 0);
+}
+
+void MenuSDLRenderer::setY(int y)
+{
+  this->y = y;
+  MenuSDLRenderer::updateLabelRect(0, y);
+}
+
+void MenuSDLRenderer::updateLabelRect(int x, int y)
+{
+  for (int i = 0; i < this->labelRects.size(); i++)
+  {
+    if (x)
+    {
+      this->labelRects[i].x += x;
+    }
+    if (y)
+    {
+      this->labelRects[i].y += y;
+    }
+  }
 }
 
 void MenuSDLRenderer::render()
@@ -82,8 +144,8 @@ SDL_Texture* MenuSDLRenderer::getLabelTexture(std::string label)
 SDL_Rect MenuSDLRenderer::getLabelRect(std::string label)
 {
   MenuSDLRenderer::labelSurfaceSize labelSurfaceSize = this->getLabelSurfaceSize(label);
-  int x = 0;
-  int y = this->menu->getIndex(label) * labelSurfaceSize.h;
+  int x = 0 + this->x;
+  int y = this->menu->getIndex(label) * labelSurfaceSize.h + this->y;
   int w = labelSurfaceSize.w;
   int h = labelSurfaceSize.h;
   return { x, y, w, h };

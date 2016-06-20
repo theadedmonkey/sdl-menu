@@ -13,10 +13,16 @@
 class MenuSDLRenderer
 {
   public:
-    MenuSDLRenderer(Menu* menu, SDL_Renderer* renderer);
+    MenuSDLRenderer(Menu* menu, SDL_Renderer* renderer, int x = 0, int y = 0);
     virtual ~MenuSDLRenderer();
 
     void render();
+
+    int getW();
+    int getH();
+
+    void setX(int x);
+    void setY(int y);
 
   protected:
 
@@ -24,6 +30,9 @@ class MenuSDLRenderer
     Menu* menu;
 
     SDL_Renderer* renderer;
+
+    // position
+    int x, y;
 
     // label surface size
     struct labelSurfaceSize
@@ -42,6 +51,7 @@ class MenuSDLRenderer
     // label rects
     std::vector<SDL_Rect> labelRects;
     SDL_Rect getLabelRect(std::string);
+    void updateLabelRect(int x, int y);
 
     // font
     std::string fontPath = "./assets/OpenSans-Regular.ttf";
