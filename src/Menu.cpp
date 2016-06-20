@@ -7,6 +7,7 @@
 #include <SDL2/SDL.h>
 
 #include <MenuComponent.h>
+#include <MenuComponentAction.h>
 #include <MenuItem.h>
 
 Menu::Menu()
@@ -17,6 +18,16 @@ Menu::Menu()
 Menu::~Menu()
 {
     //dtor
+}
+
+void Menu::addAction(MenuComponentAction* action)
+{
+
+}
+
+void Menu::executeAction()
+{
+
 }
 
 std::string Menu::getLabel()
@@ -44,6 +55,11 @@ MenuComponent* Menu::getItem(int index)
 void Menu::add(std::string label)
 {
   this->items.push_back(new MenuItem(label));
+}
+
+void Menu::add(MenuComponent* item)
+{
+  this->items.push_back(item);
 }
 
 int Menu::getItemCount()
@@ -79,6 +95,10 @@ void Menu::processEvent(SDL_Event event)
         break;
       case SDLK_DOWN:
         this->selectNextItem();
+        break;
+      case SDLK_RETURN:
+        this->items[this->getSelectedItemIndex()]->executeAction();
+        break;
     }
   }
 }

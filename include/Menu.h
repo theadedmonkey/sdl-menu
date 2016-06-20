@@ -7,6 +7,7 @@
 #include <SDL2/SDL.h>
 
 #include <MenuComponent.h>
+#include <MenuComponentAction.h>
 #include <MenuItem.h>
 
 class Menu: public MenuComponent
@@ -16,6 +17,7 @@ class Menu: public MenuComponent
         virtual ~Menu();
 
         void add(std::string label);
+        void add(MenuComponent* item);
         MenuComponent* getItem(int index);
         int getItemCount();
         MenuComponent* findItem(std::string label);
@@ -26,6 +28,9 @@ class Menu: public MenuComponent
         int getSelectedItemIndex();
 
         void processEvent(SDL_Event event);
+
+        void addAction(MenuComponentAction* action);
+        void executeAction();
 
     protected:
 
