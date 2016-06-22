@@ -42,7 +42,7 @@ int MenuSDLRenderer::getW()
 {
   /*
    * menu width is equal to the width of the menu item
-   * with highest width.
+   * with highest width plus the width of the cursor rect.
    */
   int maximun = 0;
   int labelRectW;
@@ -54,7 +54,7 @@ int MenuSDLRenderer::getW()
       maximun = labelRectW;
     }
   }
-  return maximun;
+  return maximun + this->cursorImageRect.w;
 }
 
 int MenuSDLRenderer::getH()
@@ -75,17 +75,19 @@ void MenuSDLRenderer::setX(int x)
 {
   this->x = x;
   MenuSDLRenderer::updateLabelRect(x, 0);
+  MenuSDLRenderer::updateBackgroundRect();
 }
 
 void MenuSDLRenderer::setY(int y)
 {
   this->y = y;
   MenuSDLRenderer::updateLabelRect(0, y);
+  MenuSDLRenderer::updateBackgroundRect();
 }
 
 void MenuSDLRenderer::updateLabelRect(int x, int y)
 {
-  for (int i = 0; i < this->labelRects.size(); i++)
+  for (unsigned int i = 0; i < this->labelRects.size(); i++)
   {
     if (x)
     {
@@ -98,15 +100,29 @@ void MenuSDLRenderer::updateLabelRect(int x, int y)
   }
 }
 
+void MenuSDLRenderer::updateBackgroundRect()
+{
+  this->backgroundRect = {
+    this->x - this->backgroundPadding,
+    this->y - this->backgroundPadding,
+    this->getW() + this->backgroundPadding * 2,
+    this->getH() + this->backgroundPadding * 2
+  };
+}
+
 void MenuSDLRenderer::render()
 {
+  // render background
+  SDL_SetRenderDrawColor(this->renderer, 100, 100, 100, 100);
+  SDL_RenderFillRect(this->renderer, &this->backgroundRect);
+  // render menu items
   for (int i = 0; i < this->menu->getItemCount(); i++)
   {
     SDL_RenderCopy(this->renderer, this->labelTextures[i], nullptr, &this->labelRects[i]);
 
     if (this->menu->getSelectedItemIndex() == i)
     {
-      // puts the cursor image at the right of the label
+      // render cursor image, image appears at the right of the label
       this->cursorImageRect.x = this->labelRects[i].x + this->labelRects[i].w;
       this->cursorImageRect.y = this->labelRects[i].y + this->labelRects[i].h / 2 - this->cursorImageRect.h / 2;
       SDL_RenderCopy(this->renderer, this->cursorImageTexture, nullptr, &this->cursorImageRect);

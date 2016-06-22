@@ -66,6 +66,12 @@ class MenuSDLRenderer
     SDL_Texture* cursorImageTexture;
     SDL_Rect cursorImageRect;
     void loadCursorImage();
+
+    // background
+    SDL_Rect backgroundRect;
+    SDL_Color backgroundColor = { 100, 100, 100, 255 };
+    int backgroundPadding = 40;
+    void updateBackgroundRect();
 };
 
 #endif // MENUSDLRENDERER_H
