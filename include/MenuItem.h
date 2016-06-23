@@ -7,6 +7,8 @@
 #include <MenuComponent.h>
 #include <MenuComponentAction.h>
 
+#include <SDL2/SDL.h>
+
 class MenuItem : public MenuComponent
 {
     public:
@@ -14,15 +16,11 @@ class MenuItem : public MenuComponent
         MenuItem(std::string label);
         virtual ~MenuItem();
 
-        std::string getLabel();
-        void addAction(MenuComponentAction* action);
-        void executeAction();
-
+        void processEvent(SDL_Event event);
     protected:
 
     private:
-      std::string label;
-      std::vector<MenuComponentAction*> actions;
+
 };
 
 #endif // MENUITEM_H

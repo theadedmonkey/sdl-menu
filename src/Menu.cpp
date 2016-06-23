@@ -20,21 +20,6 @@ Menu::~Menu()
     //dtor
 }
 
-void Menu::addAction(MenuComponentAction* action)
-{
-
-}
-
-void Menu::executeAction()
-{
-
-}
-
-std::string Menu::getLabel()
-{
-  return "menu label";
-}
-
 int Menu::getIndex(std::string label)
 {
   for (int i = 0 ; i < this->getItemCount(); i++)
@@ -52,15 +37,7 @@ MenuComponent* Menu::getItem(int index)
   return this->items[index];
 }
 
-void Menu::add(std::string label)
-{
-  this->items.push_back(new MenuItem(label));
-}
 
-void Menu::add(MenuComponent* item)
-{
-  this->items.push_back(item);
-}
 
 int Menu::getItemCount()
 {
@@ -86,6 +63,11 @@ int Menu::getSelectedItemIndex()
 
 void Menu::processEvent(SDL_Event event)
 {
+  if (this->areEventsDisabled)
+  {
+    return;
+  }
+
   if(event.type == SDL_KEYDOWN)
   {
     switch(event.key.keysym.sym)
@@ -97,7 +79,7 @@ void Menu::processEvent(SDL_Event event)
         this->selectNextItem();
         break;
       case SDLK_RETURN:
-        this->items[this->getSelectedItemIndex()]->executeAction();
+        this->items[this->getSelectedItemIndex()]->executeActions();
         break;
     }
   }

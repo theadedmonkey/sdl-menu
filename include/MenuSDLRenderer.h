@@ -24,6 +24,8 @@ class MenuSDLRenderer
     void setX(int x);
     void setY(int y);
 
+    void setMenu(Menu* menu);
+
   protected:
 
   private:
@@ -43,6 +45,8 @@ class MenuSDLRenderer
     };
 
     labelSurfaceSize getLabelSurfaceSize(std::string label);
+
+    void createLabelTexturesAndRects();
 
     // label texture
     std::vector<SDL_Texture*> labelTextures;

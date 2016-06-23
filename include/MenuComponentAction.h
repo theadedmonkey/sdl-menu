@@ -1,8 +1,8 @@
 #ifndef MENUCOMPONENTACTION_H
 #define MENUCOMPONENTACTION_H
 
-#include <MenuComponent.h>
-
+//#include <MenuComponent.h>
+class MenuComponent;
 class MenuComponentAction
 {
   public:

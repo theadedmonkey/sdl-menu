@@ -11,7 +11,7 @@
 
 MenuSDLRenderer::MenuSDLRenderer(Menu* menu, SDL_Renderer* renderer, int x, int y)
 {
-  this->menu = menu;
+  // sdl renderer
   this->renderer = renderer;
   this-> x = x;
   this-> y = y;
@@ -23,7 +23,19 @@ MenuSDLRenderer::MenuSDLRenderer(Menu* menu, SDL_Renderer* renderer, int x, int 
   SDL_QueryTexture(this->cursorImageTexture, nullptr, nullptr, &cursorImageW, &cursorImageH);
   this->cursorImageRect = { 0, 0, cursorImageW, cursorImageH };
 
-  // create label textures and label rects
+  this->setMenu(menu);
+}
+
+MenuSDLRenderer::~MenuSDLRenderer()
+{
+    //dtor
+}
+
+void MenuSDLRenderer::createLabelTexturesAndRects()
+{
+  this->labelTextures.clear();
+  this->labelRects.clear();
+
   std::string l;
   for (int i = 0; i < this->menu->getItemCount(); i++)
   {
@@ -33,9 +45,13 @@ MenuSDLRenderer::MenuSDLRenderer(Menu* menu, SDL_Renderer* renderer, int x, int 
   }
 }
 
-MenuSDLRenderer::~MenuSDLRenderer()
+void MenuSDLRenderer::setMenu(Menu* menu)
 {
-    //dtor
+  this->menu = menu;
+  this->menu->setRenderer(this);
+
+  this->createLabelTexturesAndRects();
+  this->updateBackgroundRect();
 }
 
 int MenuSDLRenderer::getW()
