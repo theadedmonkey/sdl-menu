@@ -104,11 +104,14 @@ int main(int argc, char* args[])
   Uint32 frameStart, frameTime;
 
   Style style;
+  style.x = 100;
+  style.y = 100;
+  style.padding = 40;
   style.fontName = "Roboto-Black.ttf";
   style.fontColor = { 200, 100, 100, 255 };
-  style.fontSize = 100;
+  style.fontSize = 44;
   style.backgroundColor = { 100, 200, 200, 255 };
-  MenuItem* menuItem = new MenuItem(renderer, "option 1", &style);
+  MenuItem* menuItem = new MenuItem(renderer, "Option", &style);
 
   // game loop
   while(!quit)

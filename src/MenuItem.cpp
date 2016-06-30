@@ -20,9 +20,14 @@ MenuItem::MenuItem(
     m_style->fontColor
   );
 
-  m_rect_dst_label = createRectFromTexture(m_texture_label);
-  m_rect_background = m_rect_dst_label;
+  m_rect_src_label = createRectFromTexture(m_texture_label);
+  m_rect_dst_label = m_rect_src_label;
+  m_rect_dst_label.x = m_style->x;
+  m_rect_dst_label.y = m_style->y;
 
+  m_rect_background = m_rect_dst_label;
+  m_rect_background.w += style->padding * 2;
+  m_rect_background.h += style->padding * 2;
 }
 
 MenuItem::~MenuItem()
@@ -61,5 +66,5 @@ void MenuItem::render()
     m_style->fontColor.a
   );
   // render label
-  SDL_RenderCopy(m_renderer_sdl, m_texture_label, nullptr, &m_rect_dst_label);
+  SDL_RenderCopy(m_renderer_sdl, m_texture_label, &m_rect_src_label, &m_rect_dst_label);
 }

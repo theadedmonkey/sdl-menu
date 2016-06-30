@@ -26,7 +26,7 @@ class MenuItem
       SDL_Renderer* m_renderer_sdl;
       Style*        m_style;
       // rects
-      // SDL_Rect      m_rect_src_label;
+      SDL_Rect      m_rect_src_label;
       SDL_Rect      m_rect_dst_label;
       SDL_Rect      m_rect_background;
       // textures
