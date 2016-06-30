@@ -106,7 +106,7 @@ int main(int argc, char* args[])
   Style style;
   style.x = 100;
   style.y = 100;
-  style.padding = 40;
+  style.padding = 80;
   style.fontName = "Roboto-Black.ttf";
   style.fontColor = { 200, 100, 100, 255 };
   style.fontSize = 44;
@@ -125,6 +125,8 @@ int main(int argc, char* args[])
       {
         quit = true;
       }
+
+      menuItem->processEvent(&e);
     }
 
 

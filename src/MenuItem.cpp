@@ -28,6 +28,15 @@ MenuItem::MenuItem(
   m_rect_background = m_rect_dst_label;
   m_rect_background.w += style->padding * 2;
   m_rect_background.h += style->padding * 2;
+
+  m_rect_dst_label.x = m_rect_background.x + style->padding;
+  m_rect_dst_label.y = m_rect_background.y + style->padding;
+
+  //bounds
+  m_min_x = m_rect_background.x;
+  m_min_y = m_rect_background.y;
+  m_max_x = m_min_x + m_rect_background.w;
+  m_max_y = m_min_y + m_rect_background.h;
 }
 
 MenuItem::~MenuItem()
@@ -67,4 +76,34 @@ void MenuItem::render()
   );
   // render label
   SDL_RenderCopy(m_renderer_sdl, m_texture_label, &m_rect_src_label, &m_rect_dst_label);
+}
+
+void MenuItem::processEvent(SDL_Event* event)
+{
+  if(event->type == SDL_MOUSEMOTION ||
+     event->type == SDL_MOUSEBUTTONDOWN ||
+     event->type == SDL_MOUSEBUTTONUP)
+    {
+      int mouse_x, mouse_y;
+      SDL_GetMouseState(&mouse_x, &mouse_y);
+
+      bool isInside = true;
+      if (mouse_x < m_min_x ||
+          mouse_x > m_max_x ||
+          mouse_y < m_min_y ||
+          mouse_y > m_max_y)
+      {
+        isInside = false;
+      }
+
+      if (isInside)
+      {
+        switch(event->type)
+        {
+          case SDL_MOUSEBUTTONDOWN:
+          std::cout << "clicked" << std::endl;
+          break;
+        }
+      }
+    }
 }
