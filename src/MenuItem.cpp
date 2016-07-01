@@ -8,29 +8,34 @@ MenuItem::MenuItem()
 MenuItem::MenuItem(
   SDL_Renderer* renderer_sdl,
   std::string label,
-  Style* style
-) : m_renderer_sdl(renderer_sdl), m_label(label), m_style(style)
+  Style* style_default,
+  Style* style_hover
+) : m_renderer_sdl(renderer_sdl),
+    m_label(label),
+    m_style(style_default),
+    m_style_default(style_default),
+    m_style_hover(style_hover)
 {
-  m_font = createFont(m_font_path, m_style->fontSize);
+  m_font = createFont(m_font_path, m_style_default->fontSize);
 
   m_texture_label = createTextTexture(
     m_renderer_sdl,
     m_label,
     m_font,
-    m_style->fontColor
+    m_style_default->fontColor
   );
 
   m_rect_src_label = createRectFromTexture(m_texture_label);
   m_rect_dst_label = m_rect_src_label;
-  m_rect_dst_label.x = m_style->x;
-  m_rect_dst_label.y = m_style->y;
+  m_rect_dst_label.x = m_style_default->x;
+  m_rect_dst_label.y = m_style_default->y;
 
   m_rect_background = m_rect_dst_label;
-  m_rect_background.w += style->padding * 2;
-  m_rect_background.h += style->padding * 2;
+  m_rect_background.w += m_style_default->padding * 2;
+  m_rect_background.h += m_style_default->padding * 2;
 
-  m_rect_dst_label.x = m_rect_background.x + style->padding;
-  m_rect_dst_label.y = m_rect_background.y + style->padding;
+  m_rect_dst_label.x = m_rect_background.x + m_style_default->padding;
+  m_rect_dst_label.y = m_rect_background.y + m_style_default->padding;
 
   //bounds
   m_min_x = m_rect_background.x;
@@ -103,7 +108,20 @@ void MenuItem::processEvent(SDL_Event* event)
           case SDL_MOUSEBUTTONDOWN:
           std::cout << "clicked" << std::endl;
           break;
+
+          case SDL_MOUSEMOTION:
+          m_style = m_style_hover;
+          break;
         }
+      }
+      else
+      {
+        switch(event->type)
+        {
+          case SDL_MOUSEMOTION:
+          m_style = m_style_default;
+          break;
+        }  
       }
     }
 }

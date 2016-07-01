@@ -12,7 +12,12 @@ class MenuItem
 {
     public:
         MenuItem();
-        MenuItem(SDL_Renderer* renderer, std::string label, Style* style);
+        MenuItem(
+          SDL_Renderer* renderer,
+          std::string label,
+          Style* style_default,
+          Style* style_hover
+        );
         virtual ~MenuItem();
 
         std::string getLabel();
@@ -24,9 +29,11 @@ class MenuItem
     protected:
     private:
       std::string m_label = "";
-
       SDL_Renderer* m_renderer_sdl;
+      // style
       Style*        m_style;
+      Style*        m_style_default;
+      Style*        m_style_hover;
       // bounds
       int m_min_x = 0;
       int m_min_y = 0;

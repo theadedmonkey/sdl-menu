@@ -111,7 +111,17 @@ int main(int argc, char* args[])
   style.fontColor = { 200, 100, 100, 255 };
   style.fontSize = 44;
   style.backgroundColor = { 100, 200, 200, 255 };
-  MenuItem* menuItem = new MenuItem(renderer, "Option", &style);
+
+  Style style_hover;
+  style_hover.x = 100;
+  style_hover.y = 100;
+  style_hover.padding = 80;
+  style_hover.fontName = "Roboto-Black.ttf";
+  style_hover.fontColor = { 10, 100, 176, 255 };
+  style_hover.fontSize = 44;
+  style_hover.backgroundColor = { 45, 46, 123, 255 };
+
+  MenuItem* menuItem = new MenuItem(renderer, "Option", &style, &style_hover);
 
   // game loop
   while(!quit)
