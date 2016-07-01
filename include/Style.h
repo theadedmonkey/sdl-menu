@@ -6,7 +6,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
-struct Style {
+struct Style
+{
   int x = 0;
   int y = 0;
 

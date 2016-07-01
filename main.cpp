@@ -5,6 +5,7 @@
 #include <SDL2/SDL_ttf.h>
 
 #include "include/Style.h"
+#include "include/Menu.h"
 #include "include/MenuItem.h"
 
 
@@ -105,23 +106,28 @@ int main(int argc, char* args[])
 
   Style style;
   style.x = 100;
-  style.y = 100;
-  style.padding = 80;
+  style.y = 50;
+  style.padding = 20;
   style.fontName = "Roboto-Black.ttf";
   style.fontColor = { 200, 100, 100, 255 };
-  style.fontSize = 44;
+  style.fontSize = 24;
   style.backgroundColor = { 100, 200, 200, 255 };
 
   Style style_hover;
   style_hover.x = 100;
-  style_hover.y = 100;
-  style_hover.padding = 80;
+  style_hover.y = 50;
+  style_hover.padding = 20;
   style_hover.fontName = "Roboto-Black.ttf";
   style_hover.fontColor = { 10, 100, 176, 255 };
-  style_hover.fontSize = 44;
+  style_hover.fontSize = 24;
   style_hover.backgroundColor = { 45, 46, 123, 255 };
 
-  MenuItem* menuItem = new MenuItem(renderer, "Option", &style, &style_hover);
+  auto menu = new Menu(renderer, "menu", style, style_hover);
+  menu->add("play");
+  menu->add("Options");
+  menu->add("Quit");
+
+  // MenuItem* menuItem = new MenuItem(renderer, "Option", &style, &style_hover);
 
   // game loop
   while(!quit)
@@ -136,14 +142,16 @@ int main(int argc, char* args[])
         quit = true;
       }
 
-      menuItem->processEvent(&e);
+      // menuItem->processEvent(&e);
+      menu->processEvent(&e);
     }
 
 
     SDL_SetRenderDrawColor(renderer, 000, 000, 000, 255);
     SDL_RenderClear(renderer);
 
-    menuItem->render();
+    // menuItem->render();
+    menu->render();
 
     SDL_RenderPresent(renderer);
 
