@@ -12,6 +12,7 @@ CC = g++ -std=c++11
 LINKER_FLAGS = -lSDL2                        \
 	             -lSDL2_image                  \
 							 -lSDL2_ttf                    \
+							 src/Style.cpp                 \
 							 src/Utils.cpp                 \
 							 src/Menu.cpp                  \
 							 src/MenuItem.cpp

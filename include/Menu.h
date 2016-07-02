@@ -18,12 +18,12 @@ class Menu
         Menu(
           SDL_Renderer* renderer_sdl,
           std::string label,
-          Style style_items,
-          Style style_items_hover
+          Style* style_items,
+          Style* style_items_hover
         );
         virtual ~Menu();
 
-        void add(std::string label);
+        void addItem(std::string label);
 
         void render();
         void processEvent(SDL_Event* event);
@@ -33,8 +33,8 @@ class Menu
       std::string m_label = "";
       SDL_Renderer* m_renderer_sdl;
       // style
-      Style m_style_items;
-      Style m_style_items_hover;
+      Style* m_style_items;
+      Style* m_style_items_hover;
 
       std::vector<MenuItem*> m_items;
 };

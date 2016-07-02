@@ -8,34 +8,34 @@ MenuItem::MenuItem()
 MenuItem::MenuItem(
   SDL_Renderer* renderer_sdl,
   std::string label,
-  Style style_default,
-  Style style_hover
+  Style* style_default,
+  Style* style_hover
 ) : m_renderer_sdl(renderer_sdl),
     m_label(label),
     m_style(style_default),
     m_style_default(style_default),
     m_style_hover(style_hover)
 {
-  m_font = createFont(m_font_path, m_style_default.fontSize);
+  m_font = createFont(m_font_path, m_style_default->getFontSize());
 
   m_texture_label = createTextTexture(
     m_renderer_sdl,
     m_label,
     m_font,
-    m_style_default.fontColor
+    m_style_default->getFontColor()
   );
 
   m_rect_src_label = createRectFromTexture(m_texture_label);
   m_rect_dst_label = m_rect_src_label;
-  m_rect_dst_label.x = m_style_default.x;
-  m_rect_dst_label.y = m_style_default.y;
+  m_rect_dst_label.x = m_style_default->getX();
+  m_rect_dst_label.y = m_style_default->getY();
 
   m_rect_background = m_rect_dst_label;
-  m_rect_background.w += m_style_default.padding * 2;
-  m_rect_background.h += m_style_default.padding * 2;
+  m_rect_background.w += m_style_default->getPadding() * 2;
+  m_rect_background.h += m_style_default->getPadding() * 2;
 
-  m_rect_dst_label.x = m_rect_background.x + m_style_default.padding;
-  m_rect_dst_label.y = m_rect_background.y + m_style_default.padding;
+  m_rect_dst_label.x = m_rect_background.x + m_style_default->getPadding();
+  m_rect_dst_label.y = m_rect_background.y + m_style_default->getPadding();
 
   //bounds
   m_bounds.min_x = m_rect_background.x;
@@ -69,20 +69,20 @@ void MenuItem::render()
   // set background color
   SDL_SetRenderDrawColor(
     m_renderer_sdl,
-    m_style.backgroundColor.r,
-    m_style.backgroundColor.g,
-    m_style.backgroundColor.b,
-    m_style.backgroundColor.a
+    m_style->getBackgroundColor().r,
+    m_style->getBackgroundColor().g,
+    m_style->getBackgroundColor().b,
+    m_style->getBackgroundColor().a
   );
   // render background
   SDL_RenderFillRect(m_renderer_sdl, &m_rect_background);
   // set label color
   SDL_SetRenderDrawColor(
     m_renderer_sdl,
-    m_style.fontColor.r,
-    m_style.fontColor.g,
-    m_style.fontColor.b,
-    m_style.fontColor.a
+    m_style->getFontColor().r,
+    m_style->getFontColor().g,
+    m_style->getFontColor().b,
+    m_style->getFontColor().a
   );
   // render label
   SDL_RenderCopy(m_renderer_sdl, m_texture_label, &m_rect_src_label, &m_rect_dst_label);

@@ -8,8 +8,8 @@ Menu::Menu()
 Menu::Menu(
   SDL_Renderer* renderer_sdl,
   std::string label,
-  Style style_items,
-  Style style_items_hover
+  Style* style_items,
+  Style* style_items_hover
 ) : m_renderer_sdl(renderer_sdl),
     m_label(label),
     m_style_items(style_items),
@@ -23,19 +23,22 @@ Menu::~Menu()
 
 }
 
-void Menu::add(std::string label)
+void Menu::addItem(std::string label)
 {
-  Style style_default = m_style_items;
+  Style* style_default = m_style_items;
 
   MenuItem* prev_item;
   Bounds*   prev_item_bounds;
+  // works out the position of the new menu item
+  // using the position of the previous item in the
+  // menu
   if (m_items.size())
   {
     prev_item = m_items.back();
     prev_item_bounds = prev_item->getBounds();
 
-    style_default.x = prev_item_bounds->min_x;
-    style_default.y = prev_item_bounds->max_y;
+    style_default->setX(prev_item_bounds->min_x);
+    style_default->setY(prev_item_bounds->max_y);
 
     m_items.push_back(new MenuItem(
       m_renderer_sdl,

@@ -104,28 +104,28 @@ int main(int argc, char* args[])
 
   Uint32 frameStart, frameTime;
 
-  Style style;
-  style.x = 100;
-  style.y = 50;
-  style.padding = 20;
-  style.fontName = "Roboto-Black.ttf";
-  style.fontColor = { 200, 100, 100, 255 };
-  style.fontSize = 24;
-  style.backgroundColor = { 100, 200, 200, 255 };
+  Style* style = new Style();
+  style->setX(100);
+  style->setY(50);
+  style->setPadding(20);
+  style->setFontName("Roboto-Black.ttf");
+  style->setFontColor({ 200, 100, 100, 255 });
+  style->setFontSize(24);
+  style->setBackgroundColor({ 100, 200, 200, 255 });
 
-  Style style_hover;
-  style_hover.x = 100;
-  style_hover.y = 50;
-  style_hover.padding = 20;
-  style_hover.fontName = "Roboto-Black.ttf";
-  style_hover.fontColor = { 10, 100, 176, 255 };
-  style_hover.fontSize = 24;
-  style_hover.backgroundColor = { 45, 46, 123, 255 };
+  Style* style_hover = new Style();
+  style_hover->setX(100);
+  style_hover->setY(50);
+  style_hover->setPadding(20);
+  style_hover->setFontName("Roboto-Black.ttf");
+  style_hover->setFontColor({ 200, 100, 100, 255 });
+  style_hover->setFontSize(24);
+  style_hover->setBackgroundColor({ 50, 123, 235, 255 });
 
   auto menu = new Menu(renderer, "menu", style, style_hover);
-  menu->add("play");
-  menu->add("Options");
-  menu->add("Quit");
+  menu->addItem("Play");
+  menu->addItem("Options");
+  menu->addItem("Quit");
 
   // MenuItem* menuItem = new MenuItem(renderer, "Option", &style, &style_hover);
 
