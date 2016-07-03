@@ -25,6 +25,9 @@ class MenuItem
         std::string getLabel();
         void setLabel(std::string label);
 
+        Style* getStyleDefault();
+        Style* getStyleHover();
+
         Bounds* getBounds();
 
         void render();

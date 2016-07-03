@@ -44,25 +44,15 @@ MenuItem::MenuItem(
   m_bounds.max_y = m_bounds.min_y + m_rect_background.h;
 }
 
-MenuItem::~MenuItem()
-{
+MenuItem::~MenuItem() { }
 
-}
+std::string MenuItem::getLabel() { return m_label; }
+void MenuItem::setLabel(std::string label) { m_label = label; }
 
-std::string MenuItem::getLabel()
-{
-  return m_label;
-}
+Style* MenuItem::getStyleDefault() { return m_style_default; }
+Style* MenuItem::getStyleHover() { return m_style_hover; }
 
-void MenuItem::setLabel(std::string label)
-{
-  m_label = label;
-}
-
-Bounds* MenuItem::getBounds()
-{
-  return &m_bounds;
-}
+Bounds* MenuItem::getBounds() { return &m_bounds; }
 
 void MenuItem::render()
 {
